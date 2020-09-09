@@ -41,37 +41,39 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('lowongan_kerja.create') }}" method="POST" class="form-material" enctype="multipart/form-data">
+                        <form action="{{ route('katalog.create') }}" method="POST" class="form-material" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-body">
 
 
                                 <div class="form-group">
-                                    <label><strong>Title</strong></span></label>
-                                    <input type="text" class="form-control form-control-line" placeholder="Masukan Title" name="C_VACANCY_TITLE" id="C_VACANCY_TITLE" value="" required> 
+                                    <label><strong>JUDUL BUKU</strong></span></label>
+                                    <input type="text" class="form-control form-control-line" placeholder="Masukan Title" name="C_BUKU_JUDUL" id="C_BUKU_JUDUL" value="" required> 
                                 </div>
 
                                 <div class="form-group">
-                                    <label><strong>Subtitle</strong></span></label>
-                                    <input type="text" class="form-control form-control-line" placeholder="Masukan Subtitle" name="C_VACANCY_SUBTITLE" id="C_VACANCY_SUBTITLE" value="" required> 
-                                </div>
-
-                                <div class="form-group">
-                                    <label><strong>Description</strong></span></label>
-                                    <textarea class="textarea_editor form-control" name="C_VACANCY_DESCRIPTION" rows="15" placeholder="Enter text ..."></textarea>
+                                    <label><strong>INFORMASI UMUM</strong></span></label>
+                                    <textarea class="form-control" name="C_BUKU_INFORMASI_UMUM" rows="10" placeholder="Enter text ..."></textarea>
                                 </div>
                                 <hr>
 
                                 <div class="form-group">
-                                    <label><strong>Status</strong></span></label>
-                                    <select class="select2 form-control custom-select" name="C_VACANCY_ISACTIVE" style="width: 100%; height:36px;" >
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak Aktif</option>
-                                    </select>
+                                    <label><strong>PENGARANG BUKU</strong></span></label>
+                                    <input type="text" class="form-control form-control-line" placeholder="Masukan Title" name="C_BUKU_PENGARANG" id="C_BUKU_PENGARANG" value="" required> 
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="C_VACANCY_IMAGE"><span style="color:red;">*</span> File Image Max 1 mb and size 116 × 42</label>
+                                    <label><strong>TAHUN TERBIT</strong></span></label>
+                                    <input type="text" class="form-control form-control-line" placeholder="Masukan Title" name="C_BUKU_TAHUN_TERBIT" id="C_BUKU_TAHUN_TERBIT" value="" required> 
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>LOKASI BUKU</strong></span></label>
+                                    <input type="text" class="form-control form-control-line" placeholder="Masukan Title" name="C_BUKU_LOKASI" id="C_BUKU_LOKASI" value="" required> 
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="C_BUKU_COVER"><span style="color:red;">*</span> File Image Max 1 mb </label>
                                   <div class="input-group">
                                     <input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled" required>
                                     <div class="input-group-btn">
@@ -83,8 +85,16 @@
                                   </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label><strong>Status Ketersediaan</strong></span></label>
+                                    <select class="select2 form-control custom-select" name="C_BUKU_STATUS_KETERSEDIAAN" style="width: 100%; height:36px;" >
+                                        <option value="1">Tersedia</option>
+                                        <option value="0">Tidak Tersedia</option>
+                                    </select>
+                                </div>
+
                                 <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Submit</button>
-                                <a type="button" href="{{ route('lowongan_kerja') }}" class="btn btn-inverse">Cancel</a>
+                                <a type="button" href="{{ route('dashboard') }}" class="btn btn-inverse">Cancel</a>
                                 <hr>
                                 
                             </div>

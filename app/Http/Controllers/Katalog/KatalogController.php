@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\News;
+namespace App\Http\Controllers\Katalog;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,10 +11,10 @@ use Carbon\Carbon;
 use Log;
 use Session;
 use Redirect;
-use App\Models\TRACESTUDY_T_NEWS;
+use App\Models\DIGILIB_T_BUKU;
 use Storage;
 
-class NewsController extends Controller
+class KatalogController extends Controller
 {
 
     /**
@@ -24,7 +24,7 @@ class NewsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -43,9 +43,9 @@ class NewsController extends Controller
 
     public function add() {
         
-        $data['title'] = 'Tambah Data Berita';
-
-        return view('news.add', $data);
+        $data['title'] = 'Tambah Data Buku';
+// return 'GOOOD';
+        return view('katalog.add', $data);
     }
 
     public function create(request $request) {
@@ -59,35 +59,35 @@ class NewsController extends Controller
         $file = $request->file('file');
 
         $path = Storage::putFile(
-            'public/img_news',
+            'public/img_book',
             $file
         );
 
-        $json['C_NEWS_IMAGE'] = str_replace('public', 'storage', $path);
+        $json['C_BUKU_COVER'] = str_replace('public', 'storage', $path);
 
         unset($json['_token']);
         unset($json['file']);
-        unset($json['_wysihtml5_mode']);
 
-        $save = TRACESTUDY_T_NEWS::insert($json);
+        $save = DIGILIB_T_BUKU::insert($json);
 
         if ($save) {
-            return redirect()->route('berita');
+            session()->flash('success', 'Anda Berhasil Menambahkan Daftar Buku');
+            return redirect()->route('dashboard');
         }else{
             toastr()->error('Maaf, Terjadi Kesalahan');
-            return redirect()->route('berita');
+            return redirect()->route('dashboard');
         }
     }
 
     public function edit($id) {
         
-        $data['title'] = 'Edit Data Berita';
+        $data['title'] = 'Edit Data Buku';
 
-        $result = TRACESTUDY_T_NEWS::where('C_NEWS_ID', $id)->first();
+        $result = DIGILIB_T_BUKU::where('C_BUKU_ID', $id)->first();
 
         $data['result'] = $result;
 
-        return view('news.edit', $data);
+        return view('katalog.edit', $data);
     }
 
     public function save(request $request) {
@@ -101,37 +101,36 @@ class NewsController extends Controller
         if ($request->file('file') != null) {
             $file = $request->file('file');
             $path = Storage::putFile(
-                'public/img_news',
+                'public/img_book',
                 $file
             );
 
-            $json['C_NEWS_IMAGE'] = str_replace('public', 'storage', $path);
+            $json['C_BUKU_COVER'] = str_replace('public', 'storage', $path);
         }else{
-            unset($json['C_NEWS_IMAGE']);
+            unset($json['C_BUKU_COVER']);
         }
 
         unset($json['_token']);
         unset($json['file']);
-        unset($json['_wysihtml5_mode']);
 
-        $save = TRACESTUDY_T_NEWS::where('C_NEWS_ID', $json['C_NEWS_ID'])->update($json);
+        $save = DIGILIB_T_BUKU::where('C_BUKU_ID', $json['C_BUKU_ID'])->update($json);
 
         if ($save) {
-            session()->flash('status', 'Berhasil Mengubah Data Berita');
-            return redirect()->route('berita');
+            session()->flash('status', 'Berhasil Mengubah Data Buku');
+            return redirect()->route('dashboard');
         }else{
             session()->flash('error', 'Something went wrong');
-            return redirect()->route('berita');
+            return redirect()->route('dashboard');
         }
     }
 
     public function drop(request $request) {
 
-        $result = TRACESTUDY_T_NEWS::where('C_NEWS_ID', $request->C_NEWS_ID);
+        $result = DIGILIB_T_BUKU::where('C_BUKU_ID', $request->C_BUKU_ID);
         $result->delete();
 
         // session()->flash('status', 'Berhasil Menghapus Data Dosen');
-        return response()->json(['success'=>"Berhasil Menghapus Data Dosen", 'tr'=>'tr_'.$request->C_NEWS_ID]);
+        return response()->json(['success'=>"Berhasil Menghapus Data BUKU", 'tr'=>'tr_'.$request->C_BUKU_ID]);
   
     }
 
