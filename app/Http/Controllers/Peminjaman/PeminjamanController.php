@@ -18,6 +18,15 @@ use Storage;
 class PeminjamanController extends Controller
 {
 
+    public function index() {
+        
+        $data['title'] = 'Info Peminjaman Buku';
+// return 'GOOD';
+        $data['list_pinjaman'] = DIGILIB_T_PEMINJAMAN::where('C_PEMINJAM_NOMOR_INDUK', Session::get('users')->C_PENGGUNA_NOMOR_INDUK)->get();
+// return $data;
+        return view('peminjaman_buku.index', $data);
+    }
+
     public function add() {
         
         $data['title'] = 'Peminjaman Buku';

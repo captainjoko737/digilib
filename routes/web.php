@@ -25,7 +25,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/login_pengguna', 'Auth\LoginController@showLoginPengguna')->name('login_pengguna');
 Route::post('/login_pengguna', 'Auth\LoginController@loginPengguna')->name('login_pengguna');
 
-Route::get('/peminjaman_buku', 'Peminjaman\PeminjamanController@add')->name('peminjaman_buku');
+Route::get('/peminjaman_buku', 'Peminjaman\PeminjamanController@index')->name('peminjaman_buku');
+Route::get('/peminjaman_buku/add', 'Peminjaman\PeminjamanController@add')->name('peminjaman_buku.add');
 Route::post('/peminjaman_buku/create', 'Peminjaman\PeminjamanController@create')->name('peminjaman_buku.create');
 Route::get('/', 'HomeController@index')->name('dashboard');
 

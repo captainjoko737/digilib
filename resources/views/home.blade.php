@@ -44,7 +44,7 @@
                                             </td>
                                             <td>    
                                                 @if (Session::get('users'))
-                                                    <a href="{{ route('peminjaman_buku', ['id' => $value->C_BUKU_ID ]) }}" class="btn btn-info pull-right">Pinjam Buku</a>
+                                                    <a href="{{ route('peminjaman_buku.add', ['id' => $value->C_BUKU_ID ]) }}" class="btn btn-info pull-right">Pinjam Buku</a>
                                                 @endif
                                             </td>
                                         </tr>
